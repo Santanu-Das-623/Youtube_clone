@@ -1,16 +1,41 @@
-const express = require('express')
-const app = express()
-
-
-// respond with "hello world" when a GET request is made to the homepage
-app.get('/', (req, res) => {
-  res.send('hello world')
+import dotenv from "dotenv"
+import connectDB from "./db/index.js";
+import {app} from "./app.js"
+dotenv.config({
+    path: './.env'
 })
 
-app.get('/twitter',(req,res)=>{
-    res.send('santanudas')
+
+
+connectDB()
+.then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+        console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
+    })
+})
+.catch((err) => {
+    console.log("MONGO db connection failed !!! ", err);
 })
 
-app.listen(port,(req,res)=>{
-    console.log(`working on port ${port}`)
-})
+
+
+// import express  from "express";
+// const app=express()
+// ;(async()=>{
+//   try{
+//     await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}}`)
+
+//     app.on("error", ()=>{
+//       console.log("err", error);
+//       throw error
+//     })
+
+//     app.listen(process.env.port, ()=>{
+//       console.log( `App is listening on port ${process.env.port}`);
+//     })
+
+//   } catch {error}{
+//     console.error("ERROR",error)
+//     throw err
+//   }
+// }) ()
